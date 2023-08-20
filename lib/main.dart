@@ -4,6 +4,7 @@ import 'Activity/home.dart';
 import 'Activity/loading.dart';
 import 'Activity/chooselocation.dart';
 import 'Activity/homeactivity.dart';
+import 'package:flutter/services.dart';
 
 // created multiple activity in the activity folder and then we import it from import function
 // routes are used for switching the activity in app 
@@ -14,6 +15,10 @@ import 'Activity/homeactivity.dart';
 //
 //  
  void main() {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.blue,
+  ));
+  
   runApp(MaterialApp(
     routes: {
       // we have to make key value pairs like map
