@@ -38,17 +38,38 @@ class weatherHome extends StatefulWidget {
 }
 
 class _weatherHomeState extends State<weatherHome> {
+  // In Flutter, a TextEditingController is a controller class that's used to manage the text input in text fields, text areas, and other text input widgets. It allows you to control the content of the text input, as well as respond to changes in the input. It's commonly used with widgets like TextField and TextFormField.
+  TextEditingController searchController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    
     //  use var as for map
-    Map info=ModalRoute.of(context)!.settings.arguments as Map;
-    print("object");
+    Map info = ModalRoute.of(context)!.settings.arguments as Map;
+    // print("object");
     // print(info["temp"].toString().substring(0,4));
-    print(info["humidity"]);
-    print(info["air"]);
-    print(info["description"]);
-    String temp=info["temp"].toString().substring(0,4);
+    // print(info["humidity"]);
+    // print(info["air"]);
+    // print(info["description"]);
+
+    // String temp=(double.parse(["temp"].toString().substring(0,4))-273).toString();
+    String temp;
+    String air;
+    if (info['temp'] != "NA") {
+      double temp_doub = (double.parse(info['temp'].toString())) - 273;
+       temp = temp_doub.toString().substring(0, 4);
+      double getSpeed = (double.parse(info['air'].toString())) / 0.2777;
+       air = getSpeed.toString().substring(0, 1);
+    }else{
+      temp="NA";
+      air="-";
+      
+    }
+  
+
+    String humid = info["humidity"].toString();
+    String des = info["description"].toString().toUpperCase();
+    String loc = info["location"].toString().toUpperCase();
+
+    String img = info['icon'];
     var cit_name = [
       "London",
       "Melbourne",
@@ -116,7 +137,18 @@ class _weatherHomeState extends State<weatherHome> {
               child: Row(children: <Widget>[
                 GestureDetector(
                   // to enable the function on it detects the gesture on its child
-                  onTap: () {},
+                  onTap: () {
+                    String search = searchController
+                        .text; // getting the searched location from the text field
+                    // print(search);
+                    if ((search.replaceAll(" ", "")) != "") {
+                      // now false click can't be searched
+                      Navigator.pushReplacementNamed(context, "/loading",
+                          arguments: {"search_city": search});
+                    } else {
+                      // blank search
+                    }
+                  },
                   child: Container(
                       margin: const EdgeInsets.fromLTRB(3, 0, 7, 0),
                       child: const Icon(
@@ -126,6 +158,12 @@ class _weatherHomeState extends State<weatherHome> {
                 ),
                 Expanded(
                   child: TextField(
+                    style: const TextStyle(
+                        // used to set the style in active search bar
+                        fontFamily: AutofillHints.email,
+                        fontWeight: FontWeight.w600),
+                    controller:
+                        searchController, // setting the search controller for the text field
                     // for user string input while using inside the row you have to use expanded so that Text filed takes whole dapce
                     decoration: InputDecoration(
                         border:
@@ -151,23 +189,31 @@ class _weatherHomeState extends State<weatherHome> {
               padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 26),
               child: Row(
                 children: <Widget>[
-                  // Image.network("src"),
+                  Image.network(
+                    "https://openweathermap.org/img/wn/$img@2x.png",
+                    width: 80,
+                    height: 90,
+                    fit: BoxFit.fitHeight,
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const <Widget>[
+                    children: <Widget>[
                       Text(
-                        "Scattered Clouds",
-                        style: TextStyle(
+                        "$des",
+                        style: const TextStyle(
                             fontFamily: AutofillHints.transactionAmount,
                             fontSize: 16,
                             fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
-                        "In Ahmedabad",
-                        style: TextStyle(
+                        "In $loc",
+                        style: const TextStyle(
                             fontFamily: AutofillHints.transactionAmount,
                             fontSize: 16,
                             fontWeight: FontWeight.bold),
@@ -210,11 +256,14 @@ class _weatherHomeState extends State<weatherHome> {
                       )
                     ],
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children:  [
+                    children: [
                       Text("$temp",
-                          style:const  TextStyle(
+                          style: const TextStyle(
                               fontFamily: AutofillHints.transactionAmount,
                               fontSize: 80,
                               fontWeight: FontWeight.bold)),
@@ -237,8 +286,8 @@ class _weatherHomeState extends State<weatherHome> {
                   Container(
                       height: 200,
                       width: 170,
-                      padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 50),
-
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 27, vertical: 50),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(14),
                           color: Colors.white.withOpacity(0.5)),
@@ -269,17 +318,17 @@ class _weatherHomeState extends State<weatherHome> {
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Text("41",
-                                  style: TextStyle(
+                            children: [
+                              Text("$humid",
+                                  style: const TextStyle(
                                       fontFamily:
                                           AutofillHints.transactionAmount,
                                       fontSize: 35,
                                       fontWeight: FontWeight.bold)),
-                              SizedBox(
+                              const SizedBox(
                                 width: 3,
                               ),
-                              Text("%",
+                              const Text("%",
                                   style: TextStyle(
                                       fontFamily:
                                           AutofillHints.transactionAmount,
@@ -326,17 +375,17 @@ class _weatherHomeState extends State<weatherHome> {
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Text("3",
-                                  style: TextStyle(
+                            children: [
+                              Text("$air",
+                                  style: const TextStyle(
                                       fontFamily:
                                           AutofillHints.transactionAmount,
                                       fontSize: 35,
                                       fontWeight: FontWeight.bold)),
-                              SizedBox(
+                              const SizedBox(
                                 width: 3,
                               ),
-                              Text("km/hr",
+                              const Text("km/hr",
                                   style: TextStyle(
                                       fontFamily:
                                           AutofillHints.transactionAmount,

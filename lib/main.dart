@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:weather_app/Activity/weatherHome.dart';
 import 'Activity/home.dart';
@@ -15,17 +17,20 @@ import 'package:flutter/services.dart';
 //
 //  
  void main() {
+
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.blue,
   ));
   
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     routes: {
       // we have to make key value pairs like map
       //  this  / (default routeer for home can also be mention in material app widget in home property)refers to the home activty when mobile application run 
       "/": (context) =>const loadingactivity(),
       //  "/ name for the switching link " : (current activity also known as context  ) => class()
-      '/homescreen':(context) =>const  weatherHome() 
+      '/homescreen':(context) =>const  weatherHome() ,
+      '/loading':(context) => const loadingactivity()
 
     },
     

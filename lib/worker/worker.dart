@@ -14,6 +14,8 @@ class worker {
   String air_speed = "def";
   String description = "def";
 
+  String imag="def";
+
   worker(String Location) {
     this.location = Location;
   }
@@ -36,15 +38,17 @@ class worker {
       this.air_speed = (wind_data['speed']).toString();
 
       this.location = data['name'];
+      this.imag=weather_data_zero['icon'];
 
       // dataPrint();
     } catch (error) {
       // this code runs when the error get occured
-      temp = "Error Occured";
-      humidity = "Error Occured";
-      air_speed = "Error Occured";
-      description = "Error Occured";
-      location = "Invalid Location";
+      temp = "NA";
+      humidity = "-";
+      air_speed = "-";
+      description ="Cant Find The City";
+      location = "Oops Not On earth";
+      imag="10d";
     }
 
     return "finsihed";

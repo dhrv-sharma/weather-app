@@ -14,13 +14,14 @@ class loadingactivity extends StatefulWidget {
 }
 
 class _loadingState extends State<loadingactivity> {
+  String city = "New Delhi";
   String temprature = "loading";
   String humidity = "loading";
   String air_speed = "loading";
   String description = "loading";
 
   void startApp() async {
-    worker instance = worker("Bhopal");
+    worker instance = worker("$city");
     await instance.getData();
 
     temprature = instance.temp;
@@ -34,14 +35,15 @@ class _loadingState extends State<loadingactivity> {
       "temp": temprature,
       "humidity": humidity,
       "air": air_speed,
-      "description": description
+      "description": description,
+      "location": instance.location,
+      "icon": instance.imag
     });
   }
 
   @override
   void initState() {
     super.initState();
-    startApp();
   }
 
   @override
@@ -71,10 +73,18 @@ class _loadingState extends State<loadingactivity> {
   // }
 
   Widget build(BuildContext context) {
-    //  in order to change the color of the status bar use this before this import service.dart in the folder 
-    SystemChrome.setSystemUIOverlayStyle( SystemUiOverlayStyle(
+    //  in order to change the color of the status bar use this before this import service.dart in the folder
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.blue[300],
     ));
+
+    Map? search_text = ModalRoute.of(context)!.settings.arguments as Map;
+    if (search_text?.isNotEmpty ?? false) {
+      city = search_text["search_city"];
+    }
+    
+    startApp();
+
     return Scaffold(
       body: Center(
         // center is used to bring the widget at the centre of the app
