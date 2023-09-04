@@ -8,7 +8,7 @@ class loacation extends StatefulWidget {
 }
 
 class _loacationState extends State<loacation> {
-  @override
+  @override // actual build is done from this side 
   Widget build(BuildContext context) {
     return  const Scaffold(
       body: Text("This is location activity"),
