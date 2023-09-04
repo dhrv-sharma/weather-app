@@ -78,7 +78,7 @@ class _loadingState extends State<loadingactivity> {
       statusBarColor: Colors.blue[300],
     ));
 
-    // method to get arguments from the prev sections
+    // method to get arguments from the prev activity
     Map? search_text = ModalRoute.of(context)!.settings.arguments as Map;
     if (search_text?.isNotEmpty ?? false) {
       city = search_text["search_city"];
