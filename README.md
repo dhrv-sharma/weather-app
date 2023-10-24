@@ -29,6 +29,6 @@ I'm excited to share my Flutter journey with you, and I look forward to more lea
 #Flutter #WeatherApp #APIs #Learning #MobileAppDevelopment #BeginnerDeveloper #AchievementUnlocked
 
 
-![weather](https://github.com/dhrv-sharma/weather-app/assets/99127279/c8e89ed2-f86c-40f4-9365-9a876bb9d439)
+![weather](https://github.com/dhrv-sharma/weather-app/assets/99127279/536b3f28-1cc6-44a9-80c3-39545471a618)
 
 
